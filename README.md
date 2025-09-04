@@ -1,23 +1,48 @@
-# Snort Configuration Fixes
+# Snort IDS/IPS Configuration - Windows
 
-This repository contains a fixed and optimized version of the **`snort.conf`** file. The original configuration was causing issues, including performance bottlenecks and missed alerts. This version has been meticulously reviewed and corrected to ensure Snort runs efficiently and accurately.
+This repository contains a **Windows-compatible Snort configuration file (`snort.conf`)**.  
+It is tuned for monitoring and detecting intrusions on a Windows-based environment with simplified paths and enabled preprocessors.
 
-#
 
-### Key Fixes and Optimizations
+##  Features
 
-* **Rule Path Correction:** Ensured all rule paths are correctly pointed to their respective directories. This fixes common "rule not found" errors.
-* **Performance Tuning:** Adjusted settings like `config event_queue` and `config preprocessor` to optimize Snort's performance on modern systems, reducing CPU usage without sacrificing detection capabilities.
-* **Preprocessor Configuration:** Enabled and properly configured key preprocessors, such as `stream5` and `http_inspect`, to improve the accuracy of network traffic analysis.
-* **Variable Standardization:** Standardized the use of variables like `HOME_NET` and `EXTERNAL_NET` to prevent misconfigurations and simplify future rule management.
-* **Unified Logging:** Consolidated logging settings to create a more consistent and usable output for analysis and SIEM integration.
+- Preconfigured for **Windows installation paths** `C:\Snort\...`  
+- Custom **HOME_NET** variable set for local environment  
+- Includes **all default Snort rule categories**  
+- Enabled **preprocessors** for HTTP, DNS, SMTP, SSL, FTP, SIP, and more  
+- Supports both **IDS (alert-only)** and **IPS (inline)** operation modes  
+- Compatible with **Snort 2.x** on Windows  
 
-#
 
-### How to Use
+##  Installation
 
-To use this configuration file, simply clone this repository and replace your existing `snort.conf` file with the one provided here.
+1. **Download Snort for Windows**  
+   ⦁ Get the latest version from: [***Snort***](https://www.snort.org/downloads)  
+   ⦁ Install it in `C:\Snort\`
 
-```console
-git clone https://github.com/swastiksagar/snort.conf.git
-cp swastiksagar/snort.conf /etc/snort/
+2. **Update rules**  
+   ⦁ Place your updated rules under:  
+
+
+     ```
+     C:\Snort\rules\
+     C:\Snort\so_rules\
+     C:\Snort\preproc_rules\
+     ```
+
+4. **Replace the default configuration**  
+   ⦁ Copy this repository’s `snort.conf` into:  
+
+   ```
+     C:\Snort\etc\snort.conf
+   ```
+
+
+
+##  Usage
+
+Run Snort with the fixed configuration file:
+
+```powershell
+cd C:\Snort\bin
+snort.exe -c "C:\Snort\etc\snort.conf" -i 1 -A console
